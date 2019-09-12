@@ -40,13 +40,15 @@ public class Ss {
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		System.out.println("Program Started");
-		System.setProperty("webdriver.chrome.driver", "E:\\Selenium\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "F:\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://www.google.com/maps/@23.8144636,90.3718384,14z/data=!5m1!1e1");
+		//driver.get("https://www.google.com/maps/dir/Dhaka+New+Market,+Mirpur+Rd,+Dhaka+1205/13+Mirpur+Rd,+Dhaka+1205/@23.7421679,90.3726102,15z/data=!3m1!4b1!4m18!4m17!1m5!1m1!1s0x3755b84e57dd8b19:0xd66f294182e721e8!2m2!1d90.3838475!2d23.7332635!1m5!1m1!1s0x3755b8ad8ae5d3a9:0x678f8ca71427e8f5!2m2!1d90.3782731!2d23.7510727!2m3!6e0!7e2!8j1568487300!3e0");
 		
 		ImageName in = new ImageName();
 		int a = 0;
-		int hr = 17, min = 10,day = 2;
+		int hr = 14, min = 30,day = 4;
+		String [] days = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
 		while (true) {
 
 			String time = in.getTime();
@@ -68,10 +70,10 @@ public class Ss {
 
 						Thread.sleep(5000);
 						WebElement source = driver.findElement(By.xpath("//*[@id=\"sb_ifc51\"]/input"));
-						source.sendKeys("Mirpur");
+						source.sendKeys("new market");
 	
 						WebElement destination = driver.findElement(By.xpath("//*[@id=\"sb_ifc52\"]/input"));
-						destination.sendKeys("Mohammadpur");
+						destination.sendKeys("13 Mirpur Rd, Dhaka 1205");
 	
 						Thread.sleep(8000);
 	
@@ -101,7 +103,7 @@ public class Ss {
 					driver.findElement(By.xpath("//*[@id=\"pane\"]/div/div[3]/button")).click();
 					
 					
-					String s = day+"-"+hr+"-"+min;
+					String s = days[day]+"-"+hr+"-"+min;
 
 					FileUtils.copyFile(scrFile, new File("E:\\Images\\" + s + ".png"));
 					min = min-15;
@@ -110,8 +112,8 @@ public class Ss {
 						hr--;
 						if(hr==-1) {
 							day--;
-							hr = 24;
-							if(day==-1) System.exit(0);
+							hr = 24+hr;
+							if(day==-1) day = 7;
 						}
 							
 					}	
