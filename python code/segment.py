@@ -36,8 +36,11 @@ def findFinish(w,h):
    return last
 f= open("new_to_curzon1.txt","a+")
 
-for img in glob.glob("E:/Images/*.png"):            
+imgNo=0
 
+for img in glob.glob("E:/Images/*.png"):            
+#    print("Reading image no ",imgNo)
+    imgNo+=1
     inputImage = cv2.imread(str(img))
     f.write('\n')
     arr = str(img)[:-4].split('-')               
@@ -48,10 +51,16 @@ for img in glob.glob("E:/Images/*.png"):
     else:
         f.write("No,")
     #f.write(str(inputImage))
-    f.write(arr[1])
-    f.write(":")
-    f.write(arr[2])
-    f.write(',')
+    if(arr[2]=="60"):
+        f.write(str(int(arr[1])+1))
+        f.write(".")
+        f.write("00")
+        f.write(',')
+    else:    
+        f.write(arr[1])
+        f.write(".")
+        f.write(arr[2])
+        f.write(',')    
     #    cv2.imshow('final',inputImage)
     #    cv2.waitKey(0)
     #    cv2.destroyAllWindows()
@@ -70,12 +79,12 @@ for img in glob.glob("E:/Images/*.png"):
     start = findInit(width,height)
     finish = findFinish(width,height)
     
-    for j in range (start,height,25):
+    for j in range (start,height,40):
     #          print(j)  
           red=0
           blue=0
           yellow=0
-          for k in range (j,j+25):
+          for k in range (j,j+40):
                 for i in range (0,width):
                      if(k>finish):
                         break
@@ -97,12 +106,14 @@ for img in glob.glob("E:/Images/*.png"):
                          yellow = yellow+1
 
 
-
+#          print("Seg-->",seg,red,"  ",blue," ",yellow,"\n")  
           if(yellow>red and yellow>blue):
               f.write("Y,")
-          if(red>yellow and red>blue):
+          elif(red>yellow and red>blue):
               f.write("R,")
-          if(blue>red and blue>yellow):
-              f.write("B,")    
+          elif(blue>red and blue>yellow):
+              f.write("B,")
+          else:
+              print("Image ",imgNo," Segment ",seg, "kisu korte pari nai")
           seg = seg+1
           
