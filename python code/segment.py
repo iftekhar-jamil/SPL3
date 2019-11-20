@@ -34,32 +34,49 @@ def findFinish(w,h):
             if(mask_red[j,i]>0 or mask_blue[j,i]>0 or mask_yellow[j,i]>0):
                 last = j    
    return last
-f= open("new_to_curzon1.txt","a+")
+f= open("intermediate22.txt","a+")
+#pixels = open("pixels3.txt","a+")
+Colored_Pixels = []
 
 imgNo=0
 
-for img in glob.glob("E:/Images/*.png"):            
-#    print("Reading image no ",imgNo)
+for img in glob.glob("F:\Data\*.png"):            
+    print("Reading image no ",imgNo)
     imgNo+=1
+#    if(imgNo==2):
+#        break
     inputImage = cv2.imread(str(img))
+    if(str(img).find("Sep")==-1):
+        continue
     f.write('\n')
-    arr = str(img)[:-4].split('-')               
-    f.write(arr[0][10:])
+    arr = str(img)[:-4].split('-')   
+    arr1 =  arr[0][8:].split(' ')               
+    f.write(arr1[0])
     f.write(",")
-    if(arr[0]=='Fri' or arr[0]=='Sat'):
+    f.write(arr1[1])
+    f.write(",")
+    if(arr[1]=='Fri' or arr[1]=='Sat'):
         f.write("Yes,")
     else:
         f.write("No,")
+    f.write(arr[1])    
+    f.write(',')
+#    f.write(arr[2])    
+#    f.write(',')
+#    f.write(arr[3])    
+#    f.write(',')
+    
+#    f.write(arr[4])
     #f.write(str(inputImage))
-    if(arr[2]=="60"):
-        f.write(str(int(arr[1])+1))
+    if(arr[3]=="60"):
+        f.write(str(int(arr[2])+1))
         f.write(".")
         f.write("00")
         f.write(',')
     else:    
-        f.write(arr[1])
-        f.write(".")
         f.write(arr[2])
+        f.write(".")
+        f.write(arr[3])
         f.write(',')    
     #    cv2.imshow('final',inputImage)
     #    cv2.waitKey(0)
@@ -97,15 +114,21 @@ for img in glob.glob("E:/Images/*.png"):
         #                r = r+1
         #            else:
         #                b = b+1
+                        
                      if(mask_red[k,i]>0):
                          red = red+1
-                    
+                         if(imgNo==1):
+                             Colored_Pixels.append([k,i])
+                         
                      if(mask_blue[k,i]>0):
-                         blue = blue+1    
+                         blue = blue+1                         
+                         if(imgNo==1):
+                             Colored_Pixels.append([k,i])
+                         
                      if(mask_yellow[k,i]>0):
                          yellow = yellow+1
-
-
+                         if(imgNo==1):
+                             Colored_Pixels.append([k,i])
 #          print("Seg-->",seg,red,"  ",blue," ",yellow,"\n")  
           if(yellow>red and yellow>blue):
               f.write("Y,")
@@ -113,7 +136,14 @@ for img in glob.glob("E:/Images/*.png"):
               f.write("R,")
           elif(blue>red and blue>yellow):
               f.write("B,")
-          else:
-              print("Image ",imgNo," Segment ",seg, "kisu korte pari nai")
+#          else:
+#              print("Image ",imgNo," Segment ",seg, "kisu korte pari nai")
           seg = seg+1
-          
+
+f.close()
+#pixels.close()
+pixels = open("pixels2.txt","a+")
+
+for i in range(0,len(Colored_Pixels)):
+    pixels.write(str(Colored_Pixels[i][0])+","+str(Colored_Pixels[i][1])+"\n") 
+pixels.close()        
