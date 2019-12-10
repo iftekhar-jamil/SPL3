@@ -1,15 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Sep  9 15:48:33 2019
-
-@author: User
-"""
-
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
-path = [cv2.imread(file) for file in glob.glob("F:/Projects/Python Project/Images/*.png")]
+#path = [cv2.imread(file) for file in glob.glob("F:/Projects/Python Project/Images/*.png")]
 
 lower_yellow = np.array([10,150,200])
 upper_yellow = np.array([80,250,255])
@@ -34,23 +27,27 @@ def findFinish(w,h):
             if(mask_red[j,i]>0 or mask_blue[j,i]>0 or mask_yellow[j,i]>0):
                 last = j    
    return last
-f= open("intermediate22.txt","a+")
+f= open("intermediate.txt","a+")
 #pixels = open("pixels3.txt","a+")
 Colored_Pixels = []
 
 imgNo=0
 
-for img in glob.glob("F:\Data\*.png"):            
+for img in glob.glob("F:/Data/Others/*.png"):            
     print("Reading image no ",imgNo)
     imgNo+=1
 #    if(imgNo==2):
 #        break
     inputImage = cv2.imread(str(img))
-    if(str(img).find("Sep")==-1):
-        continue
-    f.write('\n')
+#    if(str(img).find("Sep")==-1):
+#        continue
+    
+    
     arr = str(img)[:-4].split('-')   
-    arr1 =  arr[0][8:].split(' ')               
+    arr1 =  arr[0][8:].split(' ')
+#    if(arr[1]!='Fri'): 
+#        continue    
+    f.write('\n')               
     f.write(arr1[0])
     f.write(",")
     f.write(arr1[1])
@@ -129,6 +126,7 @@ for img in glob.glob("F:\Data\*.png"):
                          yellow = yellow+1
                          if(imgNo==1):
                              Colored_Pixels.append([k,i])
+                             
 #          print("Seg-->",seg,red,"  ",blue," ",yellow,"\n")  
           if(yellow>red and yellow>blue):
               f.write("Y,")
@@ -142,8 +140,10 @@ for img in glob.glob("F:\Data\*.png"):
 
 f.close()
 #pixels.close()
-pixels = open("pixels2.txt","a+")
 
-for i in range(0,len(Colored_Pixels)):
-    pixels.write(str(Colored_Pixels[i][0])+","+str(Colored_Pixels[i][1])+"\n") 
-pixels.close()        
+
+#pixels = open("pixels2.txt","a+")
+#
+#for i in range(0,len(Colored_Pixels)):
+#    pixels.write(str(Colored_Pixels[i][0])+","+str(Colored_Pixels[i][1])+"\n") 
+#pixels.close()        

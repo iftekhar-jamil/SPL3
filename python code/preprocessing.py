@@ -6,7 +6,7 @@ with open(r'intermediate22.txt', 'r') as file:
 
 for i in range (0,len(data)):
     
-     tmp = data[i][0:-2]
+     tmp = data[i][0:-1]
      arr = tmp.split(",")
      if(arr[1]=="Jul"):
          arr[1] = "1"
@@ -16,7 +16,9 @@ for i in range (0,len(data)):
      if(arr[1]=="Aug"):
          arr[1] = "2"
      if(arr[1]=="Sep"):
-         arr[1] = "3"    
+         arr[1] = "3"
+     else:
+         arr[1] = "4"
 #    month = tmp[3:6]
 #    
 #    if(month=="Jul"):

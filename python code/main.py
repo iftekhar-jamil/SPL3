@@ -3,7 +3,7 @@ import cv2
 import glob
 
 imgNo = 0
-for img in glob.glob("F:/Collected Data/Jamil Data/September/*.png"): 
+for img in glob.glob("F:/Data/Friday+Saturday/*.png"): 
     image = cv2.imread(str(img))
     imgNo += 1
     print("Reading image no ",imgNo)

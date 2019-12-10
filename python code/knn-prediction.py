@@ -36,6 +36,7 @@ def definePixels(s,f,w):
      
 #Y = dataset.iloc[:,pos+1]
 predictions = []
+
 for pos in range(4,dataset.shape[1]):
     Y = dataset.iloc[:,pos]
 #    pos = pos+1
@@ -53,16 +54,19 @@ for pos in range(4,dataset.shape[1]):
     
     #Applying Knn
     from sklearn.neighbors import KNeighborsClassifier
+    from sklearn.metrics import accuracy_score
     
     knn = KNeighborsClassifier(n_neighbors = 5, p = 2, metric='minkowski')
     #knn.fit(X_train_std, y_train)
     knn.fit(X, Y)
-    predictions.append(knn.predict([[3,0,2,12.25]]))  
+#    predicted = knn.predict([[3,0,2,12.25]]);
+#    acc = accuracy_score(Y, predicted)
+    predictions.append(knn.predict([[3,0,2,10.25]]))  
 #    print('The accuracy of the Knn  classifier on training data is {:.2f}'.format(knn.score(X_train_std, y_train)))
 #    print('The accuracy of the Knn classifier on test data is {:.2f}'.format(knn.score(X_test_std, y_test)))
 
 
-inputImage = cv2.imread("E:\ImagesNew\Fri-0-15.png")
+inputImage = cv2.imread("F:\JAMILPC\Oct-Fri-0-15.png")
 inputImage1 = inputImage
 with open('pixels3.txt', 'r') as file:
     # read a list of lines into data
@@ -138,3 +142,12 @@ for j in range (start,height,40):
 cv2.imshow('final',inputImage1)
 cv2.waitKey(0)
 cv2.destroyAllWindows()        
+
+
+#    predicted = knn.predict([[3,0,2,12.25]]);
+#    acc = accuracy_score(Y, predicted)
+  
+        
+#    print('The accuracy of the Knn  classifier on training data is {:.2f}'.format(knn.score(X_train_std, y_train)))
+#    print('The accuracy of the Knn classifier on test data is {:.2f}'.format(knn.score(X_test_std, y_test)))
+
