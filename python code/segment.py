@@ -27,7 +27,7 @@ def findFinish(w,h):
             if(mask_red[j,i]>0 or mask_blue[j,i]>0 or mask_yellow[j,i]>0):
                 last = j    
    return last
-f= open("intermediate.txt","a+")
+f= open("inter4.txt","a+")
 #pixels = open("pixels3.txt","a+")
 Colored_Pixels = []
 

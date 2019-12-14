@@ -61,7 +61,7 @@ for pos in range(4,dataset.shape[1]):
     knn.fit(X, Y)
 #    predicted = knn.predict([[3,0,2,12.25]]);
 #    acc = accuracy_score(Y, predicted)
-    predictions.append(knn.predict([[3,0,2,10.25]]))  
+    predictions.append(knn.predict([[3,0,2,0.25]]))  
 #    print('The accuracy of the Knn  classifier on training data is {:.2f}'.format(knn.score(X_train_std, y_train)))
 #    print('The accuracy of the Knn classifier on test data is {:.2f}'.format(knn.score(X_test_std, y_test)))
 

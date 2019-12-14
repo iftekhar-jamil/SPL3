@@ -1,6 +1,6 @@
 
 data = []
-with open(r'intermediate22.txt', 'r') as file:
+with open(r'inter2.txt', 'r') as file:
     # read a list of lines into data
     data = file.readlines()
 
@@ -8,17 +8,20 @@ for i in range (0,len(data)):
     
      tmp = data[i][0:-1]
      arr = tmp.split(",")
-     if(arr[1]=="Jul"):
+     
+     if("Jul" in tmp):
          arr[1] = "1"
-         
-     if(arr[1]=="Jul"):
-         arr[1] = "1"
-     if(arr[1]=="Aug"):
+     
+     elif("Aug" in tmp):
          arr[1] = "2"
-     if(arr[1]=="Sep"):
+     
+     elif("Sep" in tmp):
          arr[1] = "3"
+     
      else:
          arr[1] = "4"
+         
+     
 #    month = tmp[3:6]
 #    
 #    if(month=="Jul"):
@@ -34,23 +37,23 @@ for i in range (0,len(data)):
 #        tmp = tmp.replace(month,"4")
 #         
 #         
-     holiday = arr[2]
-     if(holiday=="No"):
-        arr[2] = "0"
-        
-     else:
-        arr[2] = "1"
+     if("Yes" in tmp):
+         arr[2] = "1"
      
+     else:
+         arr[2] = "0"   
+                 
      if(arr[3]=="Fri" or arr[3]=="Sat"):
          arr[3] = "0"
      
      if(arr[3]=="Sun" or arr[3]=="Thu"):
-         arr[3] = "2"  
+         arr[3] = "1"  
      else:
-         arr[3] = "3"
+         arr[3] = "2"
+     arr[3] = "2"    
 #        
      tmp=""    
-     for k in range(1,len(arr)):
+     for k in range(1,16):
          tmp+=arr[k]
          if(tmp==len(arr)-1):
              continue
@@ -60,5 +63,5 @@ for i in range (0,len(data)):
 #     tmp = tmp[:-1]
      data[i] = tmp+'\n'        
 
-with open('data.csv', 'w') as file:
+with open('data1.csv', 'w') as file:
     file.writelines( data )    
