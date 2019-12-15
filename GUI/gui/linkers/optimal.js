@@ -8,17 +8,18 @@ function get_weather() {
   var date = document.getElementById("date").value
   var time1 = document.getElementById("time1").value
   var time2 = document.getElementById("time2").value
+  var holiday = document.getElementById("holiday").checked
   // name = city
   var options = {
     scriptPath : path.join(__dirname, '../engine/'),
-    args : [date,time1,time2]
+    args : [date,time1,time2, holiday]
   }
 
   let pyshell = new PythonShell('optimal.py', options);
 
   // debugger;
   pyshell.on('message', function(message) {
-     console.log(message)
+    //  console.log(message)
      var time = message.split(" ")[0];
      var img = message.split(" ")[1]; 
      time = Number(time);
@@ -30,17 +31,19 @@ function get_weather() {
      time = time.toString();
      if(time.length==4)
         time = "0"+time;
+      // console.log("asas")  
      var t = document.createTextNode("Most optimal time is "+time); 
      h.appendChild(t);
      var element = document.getElementById("pic");
-     element.parentNode.removeChild(element);
+     if(element!=undefined)
+      element.parentNode.removeChild(element);
      document.getElementById("output").appendChild(h);
      var elem = document.createElement('img');
         elem.setAttribute("src", "data:image/jpeg;base64, "+img);
         elem.setAttribute("height", "400px");
-        elem.setAttribute("width", "600px");
+        elem.setAttribute("width", "500px");
         elem.setAttribute("id","output");
-      document.getElementById("output").appendChild(elem);
+        document.getElementById("output").appendChild(elem);
 
   })
   

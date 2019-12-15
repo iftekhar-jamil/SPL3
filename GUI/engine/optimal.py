@@ -10,7 +10,26 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 import os 
 
-date = sys.argv[1]
+date = sys.argv[1].strip()
+import datetime
+month, day, year = (int(x) for x in date.split('-'))    
+ans = datetime.date(month, day, year)
+val = ans.strftime("%A")
+
+if(val=="Friday" or val=="Saturday"):
+    val = 1
+elif(val=="Sunday" or val=="Thursday"):
+    val = 2
+else:
+    val = 3
+
+holiday = sys.argv[4].strip()
+
+if(holiday=="true"):
+    holiday = 1
+
+if(holiday=="false"):
+    holiday = 0
 
 
 def findInit(w,h):
@@ -38,6 +57,7 @@ time2 = time2.split(":")[0]+"."+time2.split(":")[1]
 time2 = float(time2)
 # print(time2)
 
+# print(val,time1,time2)
 swap = time1
 if(time1>time2):
  
@@ -49,18 +69,17 @@ cd = os.getcwd()
 # print(date,time1,time2)
 dataset  = pd.read_csv(cd+"/engine/data.csv")
 pos = 3
-X = dataset.iloc[:,:3]
+X = dataset.iloc[:,:4]
 
 
 predictions = []
 time_results = []
 
-
+# print(val,holiday)
 
 while time1<time2:         
     tmp = []    
-    
-    for pos in range(3,14):
+    for pos in range(4,dataset.shape[1]):
         Y = dataset.iloc[:,pos]
 
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1, random_state=0) 
@@ -68,20 +87,20 @@ while time1<time2:
         from sklearn.preprocessing import StandardScaler
         from sklearn.model_selection import cross_val_score
         
-        sc = StandardScaler()
-        sc.fit(X_train)
-        X_train_std = sc.transform(X_train)
-        X_test_std = sc.transform(X_test)
+        # sc = StandardScaler()
+        # sc.fit(X_train)
+        # X_train_std = sc.transform(X_train)
+        # X_test_std = sc.transform(X_test)
         
         from sklearn.neighbors import KNeighborsClassifier
         
-        knn = KNeighborsClassifier(n_neighbors = 3, p = 2, metric='minkowski')
+        knn = KNeighborsClassifier(n_neighbors = 5, p = 2, metric='minkowski')
         knn.fit(X, Y)
-        tmp.append(knn.predict([[0,1,time1]]))
+        tmp.append(knn.predict([[3, holiday, val,time1]]))
 
     time1+=0.25
     predictions.append(tmp)
-
+# print(predictions)
 summations = []
 for i in range(0,len(predictions)):
     summations.append(0)
@@ -90,11 +109,11 @@ for i in range(0,len(predictions)):
 
 for i in range(0,len(predictions)):    
     for j in range(0,11):
-        if(predictions[i][j]=='Y'):
+        if(predictions[i][j-1]=='Y'):
             summations[i]+=4
-        if(predictions[i][j]=='R'):
+        if(predictions[i][j-1]=='R'):
             summations[i]+=8
-        if(predictions[i][j]=='B'):
+        if(predictions[i][j-1]=='B'):
             summations[i]+=2
         
 # print(swap)
@@ -140,20 +159,21 @@ for line in range (0,len(data)):
         if(seg==-1):
             seg = 10
             
-    if(predictions[minIndex][seg]=='Y'):
+    if(predictions[minIndex][seg-1]=='Y'):
         inputImage1[X,Y] = (0,255,255)
-    if(predictions[minIndex][seg]=='R'):
+    if(predictions[minIndex][seg-1]=='R'):
         inputImage1[X,Y] = (0,0,255)
-    if(predictions[minIndex][seg]=='B'):
+    if(predictions[minIndex][seg-1]=='B'):
         inputImage1[X,Y] = (255,0,0)
-    if(len(data)%50==0):        
-        print("Working on line ",line)    
+    # if(len(data)%50==0):        
+    #     print("Working on line ",line)    
 
 import base64
 # cv2.imshow('final',inputImage1)
 success, encoded_image = cv2.imencode('.png', inputImage1)
 content = encoded_image.tobytes()
 print(str1+base64.b64encode(content).decode('ascii'))
+cv2.imshow('final',inputImage1)
 # cv2.imshow('final',inputImage1)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()

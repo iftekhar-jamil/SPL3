@@ -6,10 +6,11 @@ function get_weather() {
 
  
   var date = document.getElementById("date").value
+  var holiday = document.getElementById("holiday").checked
  
   var options = {
     scriptPath : path.join(__dirname, '/../engine/'),
-    args : [date]
+    args : [date, holiday]
   }
 
   let pyshell = new PythonShell('analyze.py', options);
