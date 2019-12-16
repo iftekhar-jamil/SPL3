@@ -20,6 +20,7 @@ month, day, year = (int(x) for x in date.split('-'))
 ans = datetime.date(month, day, year)
 val = ans.strftime("%A")
 
+path = "\\resources\\app\\engine\\"
 if(val=="Friday" or val=="Saturday"):
     val = 1
 
@@ -41,7 +42,7 @@ if(holiday=="false"):
 date = 3
 print(date, holiday, val, time1)
 
-dataset  = pd.read_csv(cd+"/engine/data.csv")
+dataset  = pd.read_csv(cd+path+"data.csv")
 pos = 3
 X = dataset.iloc[:,:4]
 
@@ -60,7 +61,7 @@ for pos in range(4,dataset.shape[1]):
    
     from sklearn.neighbors import KNeighborsClassifier
     
-    knn = KNeighborsClassifier(n_neighbors = 5, p = 2, metric='minkowski')
+    knn = KNeighborsClassifier(n_neighbors = 9, p = 2, metric='minkowski')
     #knn.fit(X_train_std, y_train)
     knn.fit(X, Y)
     tmp = []
@@ -78,11 +79,11 @@ print(predictions)
 for i in range(0,13):    
     for j in range(0,11):
         if(predictions[j-1][i]=='Y'):
-            summations[i]+=20
+            summations[i]+=2
         if(predictions[j-1][i]=='R'):
-            summations[i]+=30
+            summations[i]+=3
         if(predictions[j-1][i]=='B'):
-            summations[i]+=10
+            summations[i]+=1
         
 
 print(summations)

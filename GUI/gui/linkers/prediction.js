@@ -2,20 +2,28 @@ let {PythonShell} = require('python-shell')
 var path = require("path")
 
 
+
+
 function get_weather() {
 
   var time = document.getElementById("time").value
   var date = document.getElementById("date").value
   var holiday = document.getElementById("holiday").checked
   
+  var predPath = path.join(__dirname, '../engine/prediction.py')
+
   // name = city
   var options = {
-    scriptPath : path.join(__dirname, '/../engine/'),
+   // scriptPath : path.join(__dirname, '/../engine/'),
     args : [time,date,holiday]
   }
 
-  let pyshell = new PythonShell('prediction.py', options);
+  
 
+  let pyshell = new PythonShell(predPath, options);
+
+  
+  
 
   pyshell.on('message', function(message) {
       console.log(message);

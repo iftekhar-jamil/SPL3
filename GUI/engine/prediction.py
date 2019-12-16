@@ -45,10 +45,11 @@ if(holiday=="false"):
 
 date = 3
 
+path = "\\resources\\app\\engine\\"
 # print(date, holiday, val, time)
 cd = os.getcwd()
 #print(os.listdir())
-dataset  = pd.read_csv(cd+"/engine/data.csv")
+dataset  = pd.read_csv(cd + path+"data.csv")
 pos = 3
 X = dataset.iloc[:,:4]
 
@@ -91,10 +92,10 @@ for pos in range(4,dataset.shape[1]):
     predictions.append(knn.predict([[int(date), int(holiday), int(val), time]]))  
 
 
-inputImage = cv2.imread(cd+"/engine/1-Oct-Tue-0-15.png")
+inputImage = cv2.imread(cd+path+"1-Oct-Tue-0-15.png")
 inputImage1 = inputImage
 
-with open(cd+'/engine/pixels2.txt', 'r') as file:
+with open(cd+path+"pixels2.txt", 'r') as file:
     # read a list of lines into data
     data = file.readlines()
 seg = 0
