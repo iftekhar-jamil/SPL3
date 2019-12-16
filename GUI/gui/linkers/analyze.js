@@ -4,7 +4,7 @@ var path = require("path")
 
 function get_weather() {
 
- 
+  document.getElementById("im").src = "https://icon-library.net/images/loading-icon-animated-gif/loading-icon-animated-gif-19.jpg"
   var date = document.getElementById("date").value
   var holiday = document.getElementById("holiday").checked
  

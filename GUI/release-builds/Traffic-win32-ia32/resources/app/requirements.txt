@@ -1,0 +1,10 @@
+requests
+beautifulsoup4
+Flask
+numpy
+keras
+lxml
+opencv-python
+matplotlib
+scikit-learn
+pandas
